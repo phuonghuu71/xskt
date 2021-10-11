@@ -1,0 +1,58 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+    table {
+        border-spacing: 0 15px;
+    }
+
+    tr td:nth-child(1),
+    tr th:nth-child(1) {
+        border-radius: 0.625rem 0 0 0.625rem;
+    }
+
+    tr td:nth-child(n + 3),
+    tr th:nth-child(n + 3) {
+        border-radius: 0 0.625rem 0.625rem 0;
+    }
+
+    td {
+        padding: 0.75rem;
+    }
+
+    thead tr {
+        @apply bg-blue-500 text-center;
+    }
+
+    tbody tr {
+        @apply bg-white text-blue-700 text-center;
+    }
+}
+
+@layer utilities {
+    .lottery {
+        @apply table text-white text-lg;
+    }
+
+    .lottery tr th:nth-child(1) {
+        border-radius: 0.625rem 0 0 0;
+    }
+
+    .lottery tr th:nth-child(n + 2) {
+        border-radius: 0 0.625rem 0 0;
+    }
+
+    .lottery tr td:nth-child(1) {
+        border-radius: 0;
+    }
+
+    .lottery tr td:nth-child(n + 2) {
+        border-radius: 0;
+    }
+
+    .lottery tbody tr {
+        @apply bg-white text-black;
+    }
+
+}
