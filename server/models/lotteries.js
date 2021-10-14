@@ -12,7 +12,7 @@ const lotteriesSchema = mongoose.Schema({
     luckyNumber: String,
     createdAt: {
         type: Date,
-        default: new Date(),
+        default: new Date().toISOString().slice(0, 10),
     },
 });
 

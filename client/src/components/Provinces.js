@@ -8,13 +8,14 @@ import DeleteProvince from './Modal/DeleteProvince';
 import { getProvinces } from '../controllers/provinces';
 import { useAlert } from 'react-alert';
 import EditProvince from './Modal/EditProvince';
+import NormalButton from './Buttons/NormalButton';
 
 function Provinces() {
     const dispatch = useDispatch();
     const alert = useAlert();
 
     // pagination
-    
+
     // get data
     const { provinces, numberOfPages, currentPage } = useSelector(
         (state) => state.provinces
@@ -29,16 +30,20 @@ function Provinces() {
 
     // current and numbpage state
     const [currPage, setCurrPage] = useState(1);
-    const [numbPage, setNumbPage] = useState(1);
+    const [numbPage, setNumbPage] = useState(1);    
 
     useEffect(() => {
-        setCurrPage(currentPage);
-        setNumbPage(numberOfPages);
-    }, [currentPage, numberOfPages]);
+        dispatch(getProvinces(currPage));
+    }, []);
 
     useEffect(() => {
         if (currPage) dispatch(getProvinces(currPage));
     }, [currPage]);
+
+    useEffect(() => {
+        setNumbPage(numberOfPages);
+        setCurrPage(currentPage);
+    }, [currentPage, numberOfPages]);
 
     // end of pagination
 
@@ -60,8 +65,7 @@ function Provinces() {
 
     // create handle
     const handleCreate = (e) => {
-        // e.preventDefault();
-        window.location.reload();
+        e.preventDefault();
         const { code, name } = provinceData;
         if (code.trim() === '' || name.trim() === '') {
             alert.error('Please input fields!');
@@ -100,7 +104,7 @@ function Provinces() {
     return (
         <div className="flex items-start h-90v">
             {/* table */}
-            <div className="ml-20">
+            <div className="province ml-20">
                 <table className="text-white border-separate text-md">
                     <thead className="bg-blue-500 text-white">
                         <tr>
@@ -113,7 +117,6 @@ function Provinces() {
                     <tbody>
                         {typeof provinces === 'undefined'
                             ? 'loading'
-                            
                             : provinces.map((province) => {
                                   return (
                                       <tr key={province._id}>
@@ -149,12 +152,13 @@ function Provinces() {
                     deleteModal={deleteModal}
                     setDeleteModal={setDeleteModal}
                     provinceModal={provinceModal}
+                    currPage={currPage}
                 />
                 <EditProvince
                     editModal={editModal}
                     setEditModal={setEditModal}
                     provinceModal={provinceModal}
-                    currentPage={currPage}
+                    currPage={currPage}
                 />
 
                 <ReactPaginate
@@ -242,16 +246,7 @@ function Provinces() {
                             </div>
                         </div>
                         <br />
-                        <div className="mb-2">
-                            <button
-                                type="submit"
-                                className="bg-white text-blue-500 hover:bg-blue-800 hover:text-white py-3 rounded-md w-full"
-                            >
-                                <p className="text-lg font-semibold">
-                                    Create Province
-                                </p>
-                            </button>
-                        </div>
+                        <NormalButton type="submit" text="Create Province" />
                     </form>
                 </div>
             </div>

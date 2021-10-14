@@ -4,6 +4,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { ImLocation } from 'react-icons/im';
 import { IoTicketOutline } from 'react-icons/io5';
 import Provinces from './Provinces';
+import Lotteries from './Lotteries';
 
 function Dashboard({ setCurrentId, province }) {
     return (
@@ -18,10 +19,12 @@ function Dashboard({ setCurrentId, province }) {
                                 <p>Manage Provinces</p>
                             </div>
                         </Link>
-                        <div className="bg-blue-800 text-white p-4 rounded-l-3xl mt-6 cursor-pointer hover:bg-white hover:text-blue-800 flex items-center">
-                            <IoTicketOutline className="mr-2" />
-                            <p>Manage Lotteries</p>
-                        </div>
+                        <Link to="lotteries">
+                            <div className="bg-blue-800 text-white p-4 rounded-l-3xl mt-6 cursor-pointer hover:bg-white hover:text-blue-800 flex items-center">
+                                <IoTicketOutline className="mr-2" />
+                                <p>Manage Lotteries</p>
+                            </div>
+                        </Link>
                         {/* <div className="bg-gray-900 flex justify-between items-center text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                             <span>Reports</span>
                             <span className="w-4 h-4 bg-blue-600 rounded-full text-white text-center font-normal text-xs">
@@ -41,7 +44,7 @@ function Dashboard({ setCurrentId, province }) {
                 </div>
             </aside>
 
-            {province ? <Provinces setCurrentId={setCurrentId} /> : <p>No</p>}
+            {province ? <Provinces setCurrentId={setCurrentId} /> : <Lotteries setCurrentId={setCurrentId} />}
         </div>
     );
 }

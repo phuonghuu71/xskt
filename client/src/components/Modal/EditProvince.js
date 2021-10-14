@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProvinces, updateProvince } from '../../controllers/provinces';
 import { useAlert } from 'react-alert';
 
-function EditProvince({ editModal, setEditModal, provinceModal, currentPage }) {
+function EditProvince({ editModal, setEditModal, provinceModal, currPage }) {
     const [provinceData, setProvinceData] = useState({
         code: '',
         name: '',
@@ -24,7 +24,7 @@ function EditProvince({ editModal, setEditModal, provinceModal, currentPage }) {
     const handleEdit = (e) => {
         e.preventDefault();
         dispatch(updateProvince(provinceModal._id, provinceData));
-        dispatch(getProvinces(currentPage));
+        dispatch(getProvinces(currPage));
         closeEditModal();
         alert.success('Edit Successfully!');
     };

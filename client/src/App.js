@@ -5,8 +5,6 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Home from './components/Home';
 import { AiFillHeart } from 'react-icons/ai';
-import { useDispatch } from 'react-redux';
-import { getProvinces } from './controllers/provinces';
 
 function App() {
     return (
@@ -41,7 +39,7 @@ function App() {
                                 </p>
                             </li>
                             <li>
-                                <Link to="/dashboard">
+                                <Link to="/provinces">
                                     <p className="mx-5 hover:text-gray-300 cursor-pointer">
                                         Switch to page for Admin
                                     </p>
@@ -55,15 +53,11 @@ function App() {
                     <Route exact path="/">
                         <Home />
                     </Route>
-                    <Route path="/dashboard">
-                        <Dashboard
-                            province={false}
-                        />
-                    </Route>
                     <Route path="/provinces">
-                        <Dashboard
-                            province={true}
-                        />
+                        <Dashboard province={true} />
+                    </Route>
+                    <Route path="/lotteries">
+                        <Dashboard province={false} />
                     </Route>
                     <Route path="/register">
                         <Register />

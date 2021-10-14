@@ -7,16 +7,6 @@
         border-spacing: 0 15px;
     }
 
-    tr td:nth-child(1),
-    tr th:nth-child(1) {
-        border-radius: 0.625rem 0 0 0.625rem;
-    }
-
-    tr td:nth-child(n + 3),
-    tr th:nth-child(n + 3) {
-        border-radius: 0 0.625rem 0.625rem 0;
-    }
-
     td {
         padding: 0.75rem;
     }
@@ -35,24 +25,18 @@
         @apply table text-white text-lg;
     }
 
-    .lottery tr th:nth-child(1) {
-        border-radius: 0.625rem 0 0 0;
-    }
-
-    .lottery tr th:nth-child(n + 2) {
-        border-radius: 0 0.625rem 0 0;
-    }
-
-    .lottery tr td:nth-child(1) {
-        border-radius: 0;
-    }
-
-    .lottery tr td:nth-child(n + 2) {
-        border-radius: 0;
-    }
-
     .lottery tbody tr {
         @apply bg-white text-black;
     }
 
+    
+    .province tr td:nth-child(1),
+    .province tr th:nth-child(1) {
+        border-radius: 0.625rem 0 0 0.625rem;
+    }
+
+    .province tr td:nth-child(n + 3),
+    .province tr th:nth-child(n + 3) {
+        border-radius: 0 0.625rem 0.625rem 0;
+    }
 }

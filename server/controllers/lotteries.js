@@ -3,9 +3,18 @@ import Provinces from '../models/provinces.js';
 
 // get Lotteries list
 export const getLotteries = async (req, res) => {
+    const { province, date } = req.query;
     try {
-        const getLotteries = await Lotteries.find();
-        res.status(200).json(getLotteries);
+        console.log(province, new Date(date).toISOString().slice(0, 10));
+        const getLotteries = await Lotteries.find({
+            province: province,
+            createdAt: new Date(date).toISOString().slice(0, 10),
+        })
+            .populate('prize', 'code name')
+            .populate('province', 'code name');
+        res.status(200).json({
+            data: getLotteries,
+        });
     } catch (error) {
         res.status(404).json({
             message: error.message,

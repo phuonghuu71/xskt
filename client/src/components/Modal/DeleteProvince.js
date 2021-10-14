@@ -7,6 +7,7 @@ function DeleteProvince({
     deleteModal,
     setDeleteModal,
     provinceModal,
+    currPage
 }) {
     const dispatch = useDispatch();
     const closeDeleteModal = () => {
@@ -20,7 +21,7 @@ function DeleteProvince({
         e.preventDefault();
         dispatch(deleteProvince(provinceModal._id));
         closeDeleteModal();
-        dispatch(getProvinces(1));
+        dispatch(getProvinces(currPage));
         alert.success('Delete Successfully!');
     };
 

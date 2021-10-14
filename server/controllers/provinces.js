@@ -6,33 +6,29 @@ import Provinces from '../models/provinces.js';
 export const getProvinces = async (req, res) => {
     const { _page } = req.query;
     const _limit = 5;
+
     try {
         if (!_page) {
             _page = 1;
         }
-        const startIndex = (_page - 1) * _limit;
-        const total = await Provinces.countDocuments({});
+        if (_page == 0) {
+            const getProvinces = await Provinces.find();
+            res.status(200).json({
+                data: getProvinces,
+            });
+        } else {
+            const startIndex = (_page - 1) * _limit;
+            const total = await Provinces.countDocuments({});
 
-        const getProvinces = await Provinces.find()
-            .limit(_limit)
-            .skip(startIndex);
-        res.status(200).json({
-            data: getProvinces,
-            currentPage: Number(_page),
-            numberOfPages: Math.ceil(total / _limit),
-        });
-    } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
-    }
-};
-
-// get Province count
-export const getProvincesCount = async (req, res) => {
-    try {
-        const getProvincesCount = await Provinces.countDocuments();
-        res.status(200).json(getProvincesCount);
+            const getProvinces = await Provinces.find()
+                .limit(_limit)
+                .skip(startIndex);
+            res.status(200).json({
+                data: getProvinces,
+                currentPage: Number(_page),
+                numberOfPages: Math.ceil(total / _limit),
+            });
+        }
     } catch (error) {
         res.status(404).json({
             message: error.message,

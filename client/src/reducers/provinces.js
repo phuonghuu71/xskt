@@ -17,7 +17,7 @@ const variable = (state = [], action) => {
         case 'DELETE':
             return state.filter((province) => province._id !== action.payload);
         default:
-            return state;
+            return state;   
     }
 };
 
