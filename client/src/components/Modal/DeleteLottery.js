@@ -1,12 +1,12 @@
 import React from 'react';
-import { deleteProvince } from '../../controllers/provinces';
+import { deleteLottery } from '../../controllers/lotteries';
 import { useDispatch } from 'react-redux';
 import { useAlert } from 'react-alert';
 
-function DeleteProvince({
+function DeleteLottery({
     deleteModal,
     setDeleteModal,
-    provinceModal,
+    lottery,
     setModalSignal,
 }) {
     const dispatch = useDispatch();
@@ -17,10 +17,10 @@ function DeleteProvince({
 
     const handleDelete = (e) => {
         e.preventDefault();
-        dispatch(deleteProvince(provinceModal._id));
+        dispatch(deleteLottery(lottery._id));
         setModalSignal(true);
-        closeDeleteModal();
         alert.success('Delete Successfully!');
+        closeDeleteModal();
     };
 
     return (
@@ -36,7 +36,7 @@ function DeleteProvince({
                             </div>
 
                             <p>
-                                {`Are you sure you want to delete this province? `}
+                                {`Are you sure you want to delete this lottery? `}
                             </p>
 
                             <div className="flex justify-end pt-2">
@@ -61,4 +61,4 @@ function DeleteProvince({
     );
 }
 
-export default DeleteProvince;
+export default DeleteLottery;

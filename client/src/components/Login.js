@@ -41,9 +41,9 @@ function Login() {
                         <div className="flex items-center bg-gray-100 py-2 px-3 rounded">
                             <RiLockPasswordFill className="w-6 h-6 mr-3 text-gray-400" />
                             <input
-                                type="password"
-                                id="password"
-                                placeholder="Password"
+                                type="text"
+                                id="username"
+                                placeholder="Username"
                                 className="bg-transparent outline-none text-black w-full"
                             />
                         </div>

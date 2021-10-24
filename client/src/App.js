@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Register from './components/Register';
 import Login from './components/Login';
 import Home from './components/Home';
-import { AiFillHeart } from 'react-icons/ai';
 
 function App() {
     return (

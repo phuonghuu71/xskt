@@ -8,12 +8,6 @@ const usersSchema = mongoose.Schema({
         type: Date,
         default: new Date(),
     },
-    lotteries: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Lotteries',
-        },
-    ],
 });
 
 const Users = mongoose.model('Users', usersSchema);

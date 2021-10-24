@@ -10,7 +10,7 @@ function Dashboard({ setCurrentId, province }) {
     return (
         <div className="flex z-0">
             {/* sidebar */}
-            <aside className="w-20w h-90v bg-gray shadow-md w-fulll hidden sm:block">
+            <aside className="w-64 h-90v bg-gray shadow-md w-fulll hidden sm:block">
                 <div className="flex flex-col justify-between h-full pl-6 pt-4 pb-4 bg-blue-600">
                     <div className="text-md">
                         <Link to="provinces">

@@ -1,65 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProvinces } from '../../controllers/provinces';
+import { createLottery } from '../../controllers/lotteries';
+import PrizesData from '../PrizesData';
+import { useAlert } from 'react-alert';
 
-function CreateLottery({ createModal, setCreateModal }) {
+function CreateLottery({ createModal, setCreateModal, setModalSignal }) {
     const dispatch = useDispatch();
     const { provinces } = useSelector((state) => state.provinces);
-    const [provinceID, setProvinceID] = useState({
-        _id: '',
-    });
-    const [prizeID, setPrizeID] = useState({
-        _id: '',
-    });
-    const [luckyNumber, setLuckyNumber] = useState({
+    const [lotteryData, setLotteryData] = useState({
+        province: '',
+        prize: '',
         luckyNumber: '',
     });
-
-    useEffect(() => {
-        dispatch(getProvinces(0));
-    }, []);
-
-    const prizes = [
-        {
-            _id: '615977f4f7dd2c5068dfcd49',
-            name: 'GDB',
-        },
-        {
-            _id: '6159784ff7dd2c5068dfcd4b',
-            name: 'G1',
-        },
-        {
-            _id: '61597856f7dd2c5068dfcd4d',
-            name: 'G2',
-        },
-        {
-            _id: '6159785bf7dd2c5068dfcd4f',
-            name: 'G3',
-        },
-        {
-            _id: '61597864f7dd2c5068dfcd51',
-            name: 'G4',
-        },
-        {
-            _id: '61597869f7dd2c5068dfcd53',
-            name: 'G5',
-        },
-        {
-            _id: '6159786ef7dd2c5068dfcd55',
-            name: 'G6',
-        },
-        {
-            _id: '6159787af7dd2c5068dfcd57',
-            name: 'G7',
-        },
-        {
-            _id: '61682029b4e3dbb95da968dd',
-            name: 'G8',
-        },
-    ];
-
+    const alert = useAlert();
     const closeCreateModal = () => {
         setCreateModal((prev) => !prev);
+    };
+
+    const clear = () => {
+        setLotteryData({
+            luckyNumber: '',
+        });
+    };
+
+    const handleCreate = (e) => {
+        const { luckyNumber, province, prize } = lotteryData;
+        if (
+            luckyNumber.trim() === '' ||
+            province.trim() === '' ||
+            prize.trim() === ''
+        ) {
+            alert.error('Please input fields!');
+        } else {
+            e.preventDefault();
+            dispatch(createLottery(lotteryData));
+            setModalSignal(true);
+            alert.success('Create Successfully!');
+            clear();
+            closeCreateModal(); 
+        }
     };
 
     return (
@@ -83,16 +62,19 @@ function CreateLottery({ createModal, setCreateModal }) {
                                 <select
                                     required
                                     className="outline-none text-blue-500 px-3 py-2 rounded-md w-full"
-                                    value={prizeID}
+                                    value={lotteryData.prize}
                                     onChange={(e) => {
-                                        setPrizeID(e.target.value);
+                                        setLotteryData({
+                                            ...lotteryData,
+                                            prize: e.target.value,
+                                        });
                                     }}
                                 >
                                     <option value="">Select One</option>
                                     {typeof provinces === 'undefined' ? (
                                         <option value="">Loading</option>
                                     ) : (
-                                        prizes.map((prize) => {
+                                        PrizesData.map((prize) => {
                                             return (
                                                 <option
                                                     value={prize._id}
@@ -111,9 +93,12 @@ function CreateLottery({ createModal, setCreateModal }) {
                                 <select
                                     required
                                     className="outline-none text-blue-500 px-3 py-2 rounded-md w-full"
-                                    value={provinceID}
+                                    value={lotteryData.province}
                                     onChange={(e) => {
-                                        setProvinceID(e.target.value);
+                                        setLotteryData({
+                                            ...lotteryData,
+                                            province: e.target.value,
+                                        });
                                     }}
                                 >
                                     <option value="">Select One</option>
@@ -149,8 +134,8 @@ function CreateLottery({ createModal, setCreateModal }) {
                                         className="bg-transparent outline-none text-black w-full"
                                         required
                                         onChange={(e) =>
-                                            setLuckyNumber({
-                                                ...luckyNumber,
+                                            setLotteryData({
+                                                ...lotteryData,
                                                 luckyNumber: e.target.value,
                                             })
                                         }
@@ -159,7 +144,10 @@ function CreateLottery({ createModal, setCreateModal }) {
                             </div>
 
                             <div className="flex justify-end pt-2">
-                                <button className="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">
+                                <button
+                                    className="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
+                                    onClick={(e) => handleCreate(e)}
+                                >
                                     Create Lottery
                                 </button>
                                 <button

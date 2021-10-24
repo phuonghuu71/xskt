@@ -25,7 +25,6 @@ export const getProvinces = async (req, res) => {
                 .skip(startIndex);
             res.status(200).json({
                 data: getProvinces,
-                currentPage: Number(_page),
                 numberOfPages: Math.ceil(total / _limit),
             });
         }
@@ -54,19 +53,30 @@ export const createProvince = async (req, res) => {
 export const updateProvince = async (req, res) => {
     const { id } = req.params;
     const { code, name } = req.body;
-
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return res.status(404).send(`No post with id: ${id}`);
-    const updatedProvince = { code, name, _id: id };
-    await Provinces.findByIdAndUpdate(id, updatedProvince, { new: true });
-    res.json(updatedProvince);
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id))
+            return res.status(404).send(`No post with id: ${id}`);
+        const updatedProvince = { code, name, _id: id };
+        await Provinces.findByIdAndUpdate(id, updatedProvince, { new: true });
+        res.json(updatedProvince);
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        });
+    }
 };
 
 // delete Province
 export const deleteProvince = async (req, res) => {
     const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return res.status(404).send(`No post with id: ${id}`);
-    await Provinces.findByIdAndRemove(id);
-    res.json({ message: 'Province deleted successfully' });
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id))
+            return res.status(404).send(`No post with id: ${id}`);
+        await Provinces.findByIdAndRemove(id);
+        res.json({ message: 'Province deleted successfully' });
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        });
+    }
 };

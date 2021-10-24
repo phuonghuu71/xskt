@@ -3,7 +3,7 @@ import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProvince, updateProvince } from '../controllers/provinces';
+import { createProvince } from '../controllers/provinces';
 import DeleteProvince from './Modal/DeleteProvince';
 import { getProvinces } from '../controllers/provinces';
 import { useAlert } from 'react-alert';
@@ -17,7 +17,7 @@ function Provinces() {
     // pagination
 
     // get data
-    const { provinces, numberOfPages, currentPage } = useSelector(
+    const { provinces, numberOfPages } = useSelector(
         (state) => state.provinces
     );
 
@@ -30,20 +30,23 @@ function Provinces() {
 
     // current and numbpage state
     const [currPage, setCurrPage] = useState(1);
-    const [numbPage, setNumbPage] = useState(1);    
+    const [provincesCurrData, setProvincesCurrData] = useState(provinces);
+    const [modalSignal, setModalSignal] = useState(false);
 
     useEffect(() => {
         dispatch(getProvinces(currPage));
-    }, []);
+    }, [dispatch, currPage]);
 
     useEffect(() => {
-        if (currPage) dispatch(getProvinces(currPage));
-    }, [currPage]);
+        if (provinces) setProvincesCurrData(provinces);
+    }, [provinces]);
 
     useEffect(() => {
-        setNumbPage(numberOfPages);
-        setCurrPage(currentPage);
-    }, [currentPage, numberOfPages]);
+        if (modalSignal) {
+            dispatch(getProvinces(currPage));
+            setModalSignal(false);
+        }
+    }, [modalSignal, currPage, dispatch]);
 
     // end of pagination
 
@@ -71,7 +74,7 @@ function Provinces() {
             alert.error('Please input fields!');
         } else {
             dispatch(createProvince(provinceData));
-            dispatch(getProvinces(currPage));
+            setModalSignal(true);
             alert.success('Create Successfully');
             clear();
         }
@@ -115,9 +118,9 @@ function Provinces() {
                     </thead>
 
                     <tbody>
-                        {typeof provinces === 'undefined'
+                        {typeof provincesCurrData === 'undefined'
                             ? 'loading'
-                            : provinces.map((province) => {
+                            : provincesCurrData.map((province) => {
                                   return (
                                       <tr key={province._id}>
                                           <td>{province.code}</td>
@@ -151,21 +154,21 @@ function Provinces() {
                 <DeleteProvince
                     deleteModal={deleteModal}
                     setDeleteModal={setDeleteModal}
+                    setModalSignal={setModalSignal}
                     provinceModal={provinceModal}
-                    currPage={currPage}
                 />
                 <EditProvince
                     editModal={editModal}
                     setEditModal={setEditModal}
                     provinceModal={provinceModal}
-                    currPage={currPage}
+                    setModalSignal={setModalSignal}
                 />
 
                 <ReactPaginate
                     previousLabel={'previous'}
                     nextLabel={'next'}
                     breakLabel={'...'}
-                    pageCount={numbPage}
+                    pageCount={numberOfPages}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={3}
                     onPageChange={handlePageClick}

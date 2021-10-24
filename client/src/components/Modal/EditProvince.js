@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProvinces, updateProvince } from '../../controllers/provinces';
+import { useDispatch } from 'react-redux';
+import { updateProvince } from '../../controllers/provinces';
 import { useAlert } from 'react-alert';
 
-function EditProvince({ editModal, setEditModal, provinceModal, currPage }) {
+function EditProvince({
+    editModal,
+    setEditModal,
+    provinceModal,
+    setModalSignal,
+}) {
     const [provinceData, setProvinceData] = useState({
         code: '',
         name: '',
@@ -24,9 +29,9 @@ function EditProvince({ editModal, setEditModal, provinceModal, currPage }) {
     const handleEdit = (e) => {
         e.preventDefault();
         dispatch(updateProvince(provinceModal._id, provinceData));
-        dispatch(getProvinces(currPage));
-        closeEditModal();
+        setModalSignal(true);
         alert.success('Edit Successfully!');
+        closeEditModal();
     };
 
     return (

@@ -4,7 +4,6 @@ import * as api from '../api';
 export const getProvinces = (page) =>  async (dispatch) => {
     try {
         const { data } = await api.fetchProvinces(page);
-        console.log(data);
         dispatch({ type: 'FETCH_ALL', payload: data });
     } catch (error) {
         console.log(error.message);
