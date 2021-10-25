@@ -4,6 +4,7 @@ const usersSchema = mongoose.Schema({
     username: String,
     password: String,
     name: String,
+    token:  String,
     createdAt: {
         type: Date,
         default: new Date(),

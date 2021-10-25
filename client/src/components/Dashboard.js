@@ -7,6 +7,10 @@ import Provinces from './Provinces';
 import Lotteries from './Lotteries';
 
 function Dashboard({ setCurrentId, province }) {
+    const handleLogout = (e) => {
+        e.preventDefault();
+        localStorage.clear();
+    };
     return (
         <div className="flex z-0">
             {/* sidebar */}
@@ -35,7 +39,10 @@ function Dashboard({ setCurrentId, province }) {
 
                     <Link to="/login">
                         <div className="flex p-3 text-white bg-red-500 hover:bg-red-600 rounded-l-3xl cursor-pointer text-center text-md">
-                            <button className="inline-flex items-center">
+                            <button
+                                className="inline-flex items-center"
+                                onClick={(e) => handleLogout(e)}
+                            >
                                 <FiLogOut className="w-4 h-4 mr-2" />
                                 <span className="font-semibold">Logout</span>
                             </button>
@@ -44,7 +51,11 @@ function Dashboard({ setCurrentId, province }) {
                 </div>
             </aside>
 
-            {province ? <Provinces setCurrentId={setCurrentId} /> : <Lotteries setCurrentId={setCurrentId} />}
+            {province ? (
+                <Provinces setCurrentId={setCurrentId} />
+            ) : (
+                <Lotteries setCurrentId={setCurrentId} />
+            )}
         </div>
     );
 }

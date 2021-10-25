@@ -1,9 +1,9 @@
 import * as api from '../api';
 
 // crud
-export const getLotteries = (province, date) => async (dispatch) => {
+export const getLotteries = (province, date, token) => async (dispatch) => {
     try {
-        const { data } = await api.fetchLotteries(province, date);
+        const { data } = await api.fetchLotteries(province, date, token);
         dispatch({ type: 'FETCH_ALL_LOTTERIES', payload: data });
     } catch (error) {
         console.log(error.message);

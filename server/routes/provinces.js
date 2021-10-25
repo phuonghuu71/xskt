@@ -1,6 +1,12 @@
 import express from 'express';
 
-import { getProvinces, createProvince, deleteProvince, updateProvince } from '../controllers/Provinces.js';
+import {
+    getProvinces,
+    createProvince,
+    deleteProvince,
+    updateProvince,
+    getProvincesHome,
+} from '../controllers/Provinces.js';
 
 const provincesRoute = express.Router();
 

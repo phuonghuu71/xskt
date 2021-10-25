@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
@@ -13,6 +14,14 @@ import NormalButton from './Buttons/NormalButton';
 function Provinces() {
     const dispatch = useDispatch();
     const alert = useAlert();
+    const history = useHistory();
+
+    const message = localStorage.getItem('message');
+    const token = localStorage.getItem('token');
+    if (message !== 'login successfully') {
+        history.push('/login');
+        alert.info('Please Login');
+    }
 
     // pagination
 
@@ -34,8 +43,8 @@ function Provinces() {
     const [modalSignal, setModalSignal] = useState(false);
 
     useEffect(() => {
-        dispatch(getProvinces(currPage));
-    }, [dispatch, currPage]);
+        dispatch(getProvinces(currPage, token));
+    }, [dispatch, currPage, token]);
 
     useEffect(() => {
         if (provinces) setProvincesCurrData(provinces);
@@ -43,10 +52,10 @@ function Provinces() {
 
     useEffect(() => {
         if (modalSignal) {
-            dispatch(getProvinces(currPage));
+            dispatch(getProvinces(currPage, token));
             setModalSignal(false);
         }
-    }, [modalSignal, currPage, dispatch]);
+    }, [modalSignal, currPage, token, dispatch]);
 
     // end of pagination
 
@@ -104,7 +113,7 @@ function Provinces() {
     };
     // end of edit province
 
-    return (
+    return message === null ? null : (
         <div className="flex items-start h-90v">
             {/* table */}
             <div className="province ml-20">

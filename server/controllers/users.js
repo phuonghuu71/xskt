@@ -1,7 +1,7 @@
 import Users from '../models/users.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import e from 'express';
+import express from 'express';
 
 // get user list
 export const getUsers = async (req, res) => {
@@ -21,15 +21,19 @@ export const createUser = async (req, res) => {
         const { username, password, name } = req.body;
 
         // check input field
-        if (!(username && password && name)) {
-            return res.status(400).send('All input is required');
-        }
+        // if (!(username && password && name)) {
+        //     return res.status(200).json({
+        //         message: 'All input is required',
+        //     });
+        // }
 
         // check exists
         const oldUser = await Users.findOne({ username });
 
         if (oldUser) {
-            return res.status(409).send('Username already exists');
+            return res.status(200).json({
+                message: 'Username already exists',
+            });
         }
 
         // encrypt pwd
@@ -58,7 +62,10 @@ export const createUser = async (req, res) => {
         newUser.token = userToken;
 
         // return user
-        res.status(201).json(newUser);
+        res.status(200).json({
+            user: newUser,
+            message: 'Register Successfully',
+        });
     } catch (error) {
         res.status(404).json({
             message: error.message,
@@ -74,7 +81,9 @@ export const loginUser = async (req, res) => {
 
         // valid
         if (!(username && password)) {
-            return res.status(400).send('All input is required');
+            return res.status(200).send({
+                message: 'all input is required',
+            });
         }
 
         // find exist account
@@ -100,8 +109,14 @@ export const loginUser = async (req, res) => {
             console.log('Login successfully');
 
             // user info
-            return res.status(200).json(user);
-        } else res.status(400).send('Invalid Credentials');
+            return res.status(200).json({
+                user: user,
+                message: 'login successfully',
+            });
+        } else
+            res.status(200).json({
+                message: 'invalid credential',
+            });
     } catch (error) {
         res.status(404).json({
             message: error.message,

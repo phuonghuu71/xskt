@@ -20,10 +20,12 @@ function Home() {
     const { lotteries } = useSelector((state) => state.lotteries);
     const [lotteriesData, setLotteriesData] = useState(lotteries);
     const alert = useAlert();
+    const token = localStorage.getItem('token');
+    console.log(token);
 
     useEffect(() => {
         dispatch(getProvinces(0));
-    }, [dispatch]);
+    }, [dispatch, token]);
 
     useEffect(() => {
         if (provinces) setProvincesData(provinces);

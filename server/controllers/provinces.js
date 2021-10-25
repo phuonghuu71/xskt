@@ -35,6 +35,20 @@ export const getProvinces = async (req, res) => {
     }
 };
 
+// get Province list for home page
+export const getProvincesHome = async (req, res) => {
+    try {
+        const getProvinces = await Provinces.find();
+        res.status(200).json({
+            data: getProvinces,
+        });
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        });
+    }
+};
+
 // create single Province
 export const createProvince = async (req, res) => {
     const Province = req.body;

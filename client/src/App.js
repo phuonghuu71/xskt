@@ -37,13 +37,6 @@ function App() {
                                     About
                                 </p>
                             </li>
-                            <li>
-                                <Link to="/provinces">
-                                    <p className="mx-5 hover:text-gray-300 cursor-pointer">
-                                        Switch to page for Admin
-                                    </p>
-                                </Link>
-                            </li>
                         </ul>
                     </nav>
                 </div>

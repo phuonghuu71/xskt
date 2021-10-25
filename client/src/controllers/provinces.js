@@ -1,9 +1,9 @@
 import * as api from '../api';
 
 // crud
-export const getProvinces = (page) =>  async (dispatch) => {
+export const getProvinces = (page, token) =>  async (dispatch) => {
     try {
-        const { data } = await api.fetchProvinces(page);
+        const { data } = await api.fetchProvinces(page, token);
         dispatch({ type: 'FETCH_ALL', payload: data });
     } catch (error) {
         console.log(error.message);
