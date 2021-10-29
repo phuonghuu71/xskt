@@ -32,4 +32,5 @@ export const deleteLottery = (_id) => axios.delete(`${url_lottery}/${_id}`);
 const url_user = 'http://localhost:5000/users';
 
 export const loginUser = (user) => axios.post(`${url_user}/login`, user);
+export const loginAuth = (user) => axios.get(`${url_user}/welcome?token=${user}`, user);
 export const registerUser = (user) => axios.post(url_user, user);

@@ -128,7 +128,7 @@ function Register() {
                     <br />
                     <div className="mb-2">
                         <button
-                            className="bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
+                            className="transition duration-200 ease-in-out bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
                             onClick={(e) => handleRegister(e)}
                         >
                             <p className="text-lg font-semibold">Sign Up</p>
@@ -137,7 +137,7 @@ function Register() {
                     <p className="text-center text-2xl mb-2">-----or-----</p>
                     <div className="mb-4">
                         <button
-                            className="bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
+                            className="transition duration-200 ease-in-out bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
                             onClick={(e) => handleLogin(e)}
                         >
                             <p className="text-lg font-semibold">Sign In</p>

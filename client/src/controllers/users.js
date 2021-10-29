@@ -10,6 +10,16 @@ export const loginUser = (user) => async (dispatch) => {
     }
 };
 
+// login auth
+export const loginAuth = (user) => async (dispatch) => {
+    try {
+        const { data } = await api.loginAuth(user);
+        dispatch({ type: 'AUTH', payload: data });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 // register
 export const registerUser = (user) => async (dispatch) => {
     try {

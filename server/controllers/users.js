@@ -15,6 +15,20 @@ export const getUsers = async (req, res) => {
     }
 };
 
+// login auth
+export const loginAuth = async(req, res) => {
+    try {
+      return res.status(200).json({
+          message_auth: 'Welcome',
+      });  
+    }
+    catch (error) {
+        res.status(404).json({
+            message_auth: error.message,
+        });
+    }
+}
+
 // create single user
 export const createUser = async (req, res) => {
     try {

@@ -41,7 +41,7 @@ function LotteriesInfo({ lotteries, prizeCode, modalSignal, setModalSignal }) {
                             />
                             <AiFillDelete
                                 className="mr-2 hover:text-gray-300"
-                                onClick={() => openDeleteModal(lottery)}
+                                onClick={(e) => openDeleteModal(lottery)}
                             />
                         </div>
                     );

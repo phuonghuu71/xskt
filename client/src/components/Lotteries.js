@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProvinces } from '../controllers/provinces';
 import { getLotteries } from '../controllers/lotteries';
@@ -9,11 +8,9 @@ import LotteriesInfo from './LotteriesInfo';
 import NormalButton from './Buttons/NormalButton';
 import CreateLottery from './Modal/CreateLottery';
 import PrizesData from './PrizesData';
-import { useAlert } from 'react-alert';
 
 function Lotteries() {
     const dispatch = useDispatch();
-    const alert = useAlert();
     const { lotteries } = useSelector((state) => state.lotteries);
     const [lotteriesCurrData, setLotteriesCurrData] = useState(lotteries);
     const [modalSignal, setModalSignal] = useState(false);
@@ -22,19 +19,10 @@ function Lotteries() {
     const [provinceID, setProvinceID] = useState({
         _id: '',
     });
-    const history = useHistory();
-    const token = localStorage.getItem('token');
-
-    const message = localStorage.getItem('message');
-    
-    if (message !== 'login successfully') {
-        history.push('/login');
-        alert.info('Please Login');
-    }
 
     useEffect(() => {
-        dispatch(getProvinces(0, token));
-    }, [dispatch, lotteries, token]);
+        dispatch(getProvinces(0));
+    }, [dispatch, lotteries]);
 
     useEffect(() => {
         if (lotteries) {
@@ -44,14 +32,14 @@ function Lotteries() {
 
     useEffect(() => {
         if (modalSignal) {
-            dispatch(getLotteries(provinceID, dateValue, token));
+            dispatch(getLotteries(provinceID, dateValue));
             setModalSignal(false);
         }
-    }, [modalSignal, provinceID, dateValue, token, dispatch]);
+    }, [modalSignal, provinceID, dateValue, dispatch]);
 
     const handleSearch = (e) => {
         e.preventDefault();
-        dispatch(getLotteries(provinceID, dateValue, token));
+        dispatch(getLotteries(provinceID, dateValue));
     };
 
     const [createModal, setCreateModal] = useState(false);

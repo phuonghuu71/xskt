@@ -12,7 +12,9 @@ const lotteriesSchema = mongoose.Schema({
     luckyNumber: String,
     createdAt: {
         type: Date,
-        default: new Date().toISOString().slice(0, 10),
+        default: new Date()
+            .toISOString({ timeZone: 'Asia/Ho_Chi_Minh' })
+            .slice(0, 10),
     },
 });
 

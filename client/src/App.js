@@ -9,14 +9,6 @@ function App() {
     return (
         <Router>
             <div className="bg-gradient-to-tl from-green-400 to-blue-500 h-screen">
-                {/* <div className="absolute h-screen w-screen">
-                    <img
-                        src="https://images.unsplash.com/photo-1531685250784-7569952593d2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1974&q=80"
-                        alt=""
-                        className="object-center h-full w-full"
-                    />
-                </div> */}
-
                 <div className="w-full shadow-lg h-10v bg-blue-500 text-white px-4 py-3 sticky flex items-center">
                     <nav>
                         <ul className="flex items-center">
@@ -45,11 +37,8 @@ function App() {
                     <Route exact path="/">
                         <Home />
                     </Route>
-                    <Route path="/provinces">
-                        <Dashboard province={true} />
-                    </Route>
-                    <Route path="/lotteries">
-                        <Dashboard province={false} />
+                    <Route path="/dashboard">
+                        <Dashboard />
                     </Route>
                     <Route path="/register">
                         <Register />

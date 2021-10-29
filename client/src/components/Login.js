@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 function Login() {
+    localStorage.clear();
     const dispatch = useDispatch();
     const alert = useAlert();
     const history = useHistory();
@@ -16,24 +17,24 @@ function Login() {
     });
     const { user, message } = useSelector((state) => state.users);
 
-    localStorage.clear();
-
     useEffect(() => {
-        if (userData) dispatch(loginUser(userData));
+        if (userData) {
+            dispatch(loginUser(userData));
+        }
     }, [dispatch, userData]);
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (message === 'login successfully') {
-            alert.info(message);
-            localStorage.setItem('message', message);
-            localStorage.setItem('token', user.token);
-            history.push('/provinces');
+        if (message !== 'login successfully') {
+            alert.error(message);
         } else {
-            alert.info(message);
+            setTimeout(function () {
+                localStorage.setItem('token', user.token);
+                history.push('/dashboard');
+                alert.success('LOGIN SUCCESSFULLY');
+            }, 500);
         }
     };
-
     const handleRegister = (e) => {
         e.preventDefault();
         history.push('/register');
@@ -99,7 +100,7 @@ function Login() {
                     <br />
                     <div className="mb-2">
                         <button
-                            className="bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
+                            className="transition duration-200 ease-in-out bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
                             onClick={(e) => handleLogin(e)}
                         >
                             <p className="text-lg font-semibold">Sign In</p>
@@ -108,7 +109,7 @@ function Login() {
                     <p className="text-center text-2xl mb-2">-----or-----</p>
                     <div className="mb-4">
                         <button
-                            className="bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
+                            className="transition duration-200 ease-in-out bg-indigo-600 hover:bg-indigo-700 py-3 rounded-md w-full"
                             onClick={(e) => handleRegister(e)}
                         >
                             <p className="text-lg font-semibold">Sign Up</p>

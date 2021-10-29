@@ -2,10 +2,12 @@ import jwt from 'jsonwebtoken';
 
 const verifyToken = (req, res, next) => {
     const token =
-        req.body._token || req.query._token || req.headers['x-access-token'];
+        req.body.token || req.query.token || req.headers['x-access-token'];
     
     if (!token) {
-        return res.status(403).send("A token is required");
+        return res.status(200).json({
+            message_auth: 'A token is required',
+        });
     }
 
     try {
@@ -13,7 +15,9 @@ const verifyToken = (req, res, next) => {
         req.Users = decoded;
     }
     catch (error) {
-        res.status(401).send('Invalid token')
+        return res.status(200).json({
+            message_auth: 'Invalid token',
+        });
     }
     return next();
 };
